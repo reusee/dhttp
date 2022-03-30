@@ -2,6 +2,7 @@ package dhttp
 
 import (
 	"bytes"
+	"context"
 	"testing"
 
 	"github.com/PuerkitoBio/goquery"
@@ -11,7 +12,7 @@ import (
 func TestReq(t *testing.T) {
 	defer he(nil, e4.TestingFatal(t))
 
-	scope := Req("GET", "https://qq.com")
+	scope := Req(context.Background(), "GET", "https://qq.com")
 
 	var content Content
 	scope.Assign(&content)
