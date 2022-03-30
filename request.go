@@ -6,36 +6,41 @@ import (
 	"net/http"
 )
 
-type RequestBody interface {
-	io.Reader
+type NewRequestBody func() io.Reader
+
+func (_ Def) RequestBody() NewRequestBody {
+	return func() io.Reader {
+		return nil
+	}
 }
 
-func (_ Def) RequestBody() RequestBody {
-	return nil
-}
+type NewRequest func() *http.Request
 
 func (_ Def) Request(
 	method Method,
 	addr Addr,
-	body RequestBody,
+	newReqBody NewRequestBody,
 	userAgent UserAgent,
 	cookie Cookie,
 	headers Headers,
 	ctx context.Context,
-) *http.Request {
+) NewRequest {
 
-	req, err := http.NewRequestWithContext(ctx, string(method), string(addr), body)
-	ce(err)
+	return func() *http.Request {
+		req, err := http.NewRequestWithContext(ctx, string(method), string(addr), newReqBody())
+		ce(err)
 
-	req.Header.Add("User-Agent", string(userAgent))
+		req.Header.Add("User-Agent", string(userAgent))
 
-	if cookie != "" {
-		req.Header.Add("Cookie", string(cookie))
+		if cookie != "" {
+			req.Header.Add("Cookie", string(cookie))
+		}
+
+		for _, header := range headers {
+			req.Header.Add(header[0], header[1])
+		}
+
+		return req
 	}
 
-	for _, header := range headers {
-		req.Header.Add(header[0], header[1])
-	}
-
-	return req
 }

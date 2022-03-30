@@ -2,22 +2,28 @@ package dhttp
 
 import (
 	"io"
-	"net/http"
-
-	"github.com/reusee/e4"
+	"time"
 )
 
 type Content []byte
 
 func (Def) Content(
-	resp *http.Response,
+	getResp GetResponse,
+	deadline RetryDeadline,
 ) (
 	content Content,
 	bs []byte,
 ) {
+do:
+	resp := getResp()
 	bs, err := io.ReadAll(resp.Body)
-	ce(err, e4.Close(resp.Body))
-	resp.Body.Close()
+	if err != nil {
+		if time.Now().Before(time.Time(deadline)) {
+			goto do
+		}
+		ce(err)
+	}
+	defer resp.Body.Close()
 	content = Content(bs)
 	return
 }

@@ -1,22 +1,26 @@
 package dhttp
 
-import "net/http"
+import (
+	"net/http"
+	"time"
+)
+
+type GetResponse func() *http.Response
 
 func (_ Def) Response(
 	client *http.Client,
-	req *http.Request,
-	retry Retry,
-) *http.Response {
-
-do:
-	resp, err := client.Do(req)
-	if err != nil {
-		if retry > 0 {
-			retry--
-			goto do
+	newReq NewRequest,
+	deadline RetryDeadline,
+) GetResponse {
+	return func() *http.Response {
+	do:
+		resp, err := client.Do(newReq())
+		if err != nil {
+			if time.Now().Before(time.Time(deadline)) {
+				goto do
+			}
+			ce(err)
 		}
-		ce(err)
+		return resp
 	}
-
-	return resp
 }
