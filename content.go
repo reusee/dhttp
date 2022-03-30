@@ -2,6 +2,7 @@ package dhttp
 
 import (
 	"io"
+	"net/http"
 	"time"
 )
 
@@ -13,9 +14,10 @@ func (Def) Content(
 ) (
 	content Content,
 	bs []byte,
+	resp *http.Response,
 ) {
 do:
-	resp := getResp()
+	resp = getResp()
 	bs, err := io.ReadAll(resp.Body)
 	if err != nil {
 		if time.Now().Before(time.Time(deadline)) {
