@@ -15,3 +15,9 @@ func (_ Def) RetryDeadline(
 ) RetryDeadline {
 	return RetryDeadline(time.Now().Add(time.Duration(d)))
 }
+
+type MaxRetry int
+
+func (_ Def) MaxRetry() MaxRetry {
+	return 8
+}
