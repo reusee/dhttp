@@ -6,11 +6,11 @@ import (
 	"testing"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/reusee/e4"
+	"github.com/reusee/e5"
 )
 
 func TestReq(t *testing.T) {
-	defer he(nil, e4.TestingFatal(t))
+	defer he(nil, e5.TestingFatal(t))
 
 	scope := Req(context.Background(), "GET", "https://qq.com")
 
