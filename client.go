@@ -5,12 +5,14 @@ import (
 	"time"
 )
 
-func (_ Def) Client(
+func (Def) Client(
 	timeout Timeout,
 	cookieJar http.CookieJar,
+	transport *http.Transport,
 ) *http.Client {
 	return &http.Client{
-		Timeout: time.Duration(timeout),
-		Jar:     cookieJar,
+		Transport: transport,
+		Timeout:   time.Duration(timeout),
+		Jar:       cookieJar,
 	}
 }

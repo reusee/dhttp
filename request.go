@@ -8,7 +8,7 @@ import (
 
 type NewRequestBody func() io.Reader
 
-func (_ Def) RequestBody() NewRequestBody {
+func (Def) RequestBody() NewRequestBody {
 	return func() io.Reader {
 		return nil
 	}
@@ -16,7 +16,7 @@ func (_ Def) RequestBody() NewRequestBody {
 
 type NewRequest func() *http.Request
 
-func (_ Def) Request(
+func (Def) Request(
 	method Method,
 	addr Addr,
 	newReqBody NewRequestBody,
