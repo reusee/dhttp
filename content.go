@@ -30,7 +30,7 @@ do:
 	return
 }
 
-func (_ Def) StringContent(
+func (Def) StringContent(
 	content []byte,
 ) string {
 	return string(content)

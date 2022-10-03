@@ -5,7 +5,7 @@ import (
 	"net/http/cookiejar"
 )
 
-func (_ Def) CookieJar() http.CookieJar {
+func (Def) CookieJar() http.CookieJar {
 	jar, err := cookiejar.New(nil)
 	ce(err)
 	return jar

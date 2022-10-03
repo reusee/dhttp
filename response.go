@@ -7,7 +7,7 @@ import (
 
 type GetResponse func() *http.Response
 
-func (_ Def) Response(
+func (Def) Response(
 	client *http.Client,
 	newReq NewRequest,
 	deadline RetryDeadline,

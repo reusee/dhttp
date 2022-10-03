@@ -6,7 +6,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func (_ Def) GoqueryDocument(
+func (Def) GoqueryDocument(
 	content []byte,
 ) (
 	doc *goquery.Document,

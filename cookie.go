@@ -2,6 +2,6 @@ package dhttp
 
 type Cookie string
 
-func (_ Def) Cookie() Cookie {
+func (Def) Cookie() Cookie {
 	return ""
 }

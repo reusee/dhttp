@@ -6,8 +6,8 @@ type Headers [][2]string
 
 var _ dscope.Reducer = Headers{}
 
-func (_ Headers) IsReducer() {}
+func (Headers) IsReducer() {}
 
-func (_ Def) Headers() Headers {
+func (Def) Headers() Headers {
 	return nil
 }
